@@ -1,11 +1,20 @@
-include("../src/MooreAgSCC.jl")
+# This script runs the model with the MooreAgComponent for both the base and pulsed DICE temperature series, then calculates the resulting SCC for a discount rate of 3%.
+# Does this for all 5 gtaps and saves to `ouput/AgSCC/ag_scc.csv`
+
+include("../src/MooreAg.jl")
+
+discount_rate = 0.03
 
 output_dir = joinpath(@__DIR__, "../output/AgSCC/")
 mkpath(output_dir)
 
-for gtap in MooreAgModel.gtaps
+f = open(joinpath(output_dir, "ag_scc.csv"), "w")
 
-    ag_scc = get_ag_scc(gtap)
-    println(gtap, ": ", ag_scc)
+for gtap in MooreAg.gtaps
 
+    ag_scc = MooreAg.get_ag_scc(gtap, rate=discount_rate)
+    println(gtap, ": \$", ag_scc)
+    write(f, "$gtap,$ag_scc\n")
 end
+
+close(f)

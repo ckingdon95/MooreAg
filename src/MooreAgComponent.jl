@@ -1,8 +1,7 @@
 ﻿using Mimi
 
-
-# Moore et al Agricutlure component with linear interpolation
-@defcomp MooreAg begin
+# Moore et al Agricutlure component (with linear interpolation between gtap temperature points)
+@defcomp MooreAgComponent begin
     regions = Index()
 
     gdp90 = Parameter(index=[regions])
@@ -15,7 +14,7 @@
     agel = Parameter(default = 0.31)
 
     agcost = Variable(index=[time,regions])     # This is the main damage variable (positive means benefits)
-    AgLossGTAP = Variable(index=[time,regions]) # added; Moore's fractional loss
+    AgLossGTAP = Variable(index=[time,regions]) # added; Moore's fractional loss (intermediate variable for calculating agcost)
 
     temp = Parameter(index=[time])              # Moore et al uses global temperature (original FUND ImpactAgriculture component uses regional temperature)
 
@@ -32,13 +31,14 @@
         end
 
         for r in d.regions
-            extrapolated_loss = linear_interpolate([0 p.gtap_df[r, :]...][:], collect(0:3), [p.temp[t]])[1]
+            # Interpolate for p.temp, using the three gtap welfare points with the additional origin (0,0) point
+            extrapolated_loss = linear_interpolate([0 p.gtap_df[r, :]...][:], collect(0:3), p.temp[t])
 
-            v.AgLossGTAP[t, r] = max(-100, extrapolated_loss) / 100
-            # v.AgLossGTAP[t, r] = min(100, extrapolated_loss) / 100
-            # v.AgLossGTAP[t, r] = max(-100, min(100, extrapolated_loss)) / 100
+            v.AgLossGTAP[t, r] = max(-100, extrapolated_loss) / 100     # floor on damages
+            # v.AgLossGTAP[t, r] = min(100, extrapolated_loss) / 100    # ceiling on benefits
+            # v.AgLossGTAP[t, r] = max(-100, min(100, extrapolated_loss)) / 100 # floor on damages and ceiling on benefits
 
-            v.agcost[t, r] = p.income[t, r] * v.agrish[t, r] * v.AgLossGTAP[t, r]  # take out the -1 because damages are the other sign in moore data
+            v.agcost[t, r] = p.income[t, r] * v.agrish[t, r] * v.AgLossGTAP[t, r]  # take out the -1 from original fund component here because damages are the other sign in moore data
         end
     end
 end
@@ -46,7 +46,7 @@ end
 
 # Moore et al Agricutlure component with quadratic interpolation
 # TODO: need to confirm how quadratic interpolation was performed
-# @defcomp MooreAg_quadratic begin
+# @defcomp MooreAgComponent_quadratic begin
 #     regions = Index()
 
 #     gdp90 = Parameter(index=[regions])

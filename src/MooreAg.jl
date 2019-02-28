@@ -1,4 +1,5 @@
-module MooreAgModel 
+
+module MooreAg 
 
 using Mimi
 using DelimitedFiles
@@ -6,7 +7,7 @@ using DelimitedFiles
 include("helper.jl")
 include("MooreAgComponent.jl")
 
-
+# Return a model with the MooreAg Component for the specified gtap damage function.
 function get_model(gtap; pulse=false)
 
     # TODO: The following input params need to be verified with Moore et al
@@ -33,17 +34,42 @@ function get_model(gtap; pulse=false)
     m = Model()
     set_dimension!(m, :time, years)       # const `years` defined in helper.jl
     set_dimension!(m, :regions, fund_regions)   # const `fund_regions` defined in helper.jl
-    add_comp!(m, MooreAg, :agriculture)
+    add_comp!(m, MooreAgComponent, :agriculture)
     set_param!(m, :agriculture, :gtap_df, get_gtap_df(gtap))
     set_leftover_params!(m, params)
     return m
 end
 
+
 # not yet correctly implemented
 # function get_model_quadratic(gtap)
 #     m = get_model(gtap)
-#     replace_comp!(m, MooreAg_quadratic, :agriculture)
+#     replace_comp!(m, MooreAgComponent_quadratic, :agriculture)
 #     return m
 # end
+
+# Calculates the Ag SCC for a pulse in 2015 DICE temperature series and the specified discount rate
+function get_ag_scc(gtap; rate = 0.03)
+
+    # Run base model
+    base = get_model(gtap)
+    run(base)
+
+    # Run model with pulse in 2015
+    pulse = get_model(gtap, pulse=true)
+    run(pulse)
+
+    # calculate marginal damages
+    diff = -1 * (pulse[:agriculture, :agcost] - base[:agriculture, :agcost])
+    global_diff = sum(diff, dims=2) * 10^9 / 10^9  # 10^9 for billions of dollars; /10^9 for Gt pulse   # TODO: is this in 1995$ from FUND?
+
+    # calculate SCC
+    pyear = 2015
+    start_idx = findfirst(isequal(pyear), years)
+    discount_factor = [(1 + rate) ^ (-1 * t) for t in 0:length(years)-start_idx]
+    ag_scc = sum(global_diff[start_idx:end] .* discount_factor)
+
+    return ag_scc
+end
 
 end
