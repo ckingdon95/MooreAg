@@ -1,4 +1,4 @@
-# This script runs Moore et al's agirculture component for SSP2 with temperature input from DICE.
+# This script runs Moore et al's agirculture component for USG2 with temperature input from DICE.
 # It runs for all five gtap DFS (two AgMIP DFs and the low, mid, and high meta-analysis DFs).
 # The variable `AgLossGTAP` (percent loss in the ag sector) is saved for each DF in `output/AgLossGTAP`. 
 

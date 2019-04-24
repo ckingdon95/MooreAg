@@ -12,10 +12,10 @@ function get_model(gtap; pulse=false)
 
     # TODO: The following input params need to be verified with Moore et al
     fund_datadir = joinpath(@__DIR__, "../data/FUND params")
-    ssp2_population = readdlm(joinpath(fund_datadir, "ssp2_population.csv"),',')   # CK saved this data from running FUND with SSP2, should be replaced with exact data Moore et al used for population
-    ssp2_income = readdlm(joinpath(fund_datadir, "ssp2_income.csv"),',')           # CK saved this data from running FUND with SSP2, should be replaced with exact data Moore et al used for income
+    usg2_population = readdlm(joinpath(fund_datadir, "usg2_population.csv"),',')   # CK saved this data from running FUND with usg2, should be replaced with exact data Moore et al used for population
+    usg2_income = readdlm(joinpath(fund_datadir, "usg2_income.csv"),',')           # CK saved this data from running FUND with usg2, should be replaced with exact data Moore et al used for income
     
-    # CK saved these dice temperature data from running DICE with SSP2 and interpolating the output, should be replaced with exact data Moore et al used for temp
+    # CK saved these dice temperature data from running DICE with usg2 and interpolating the output, should be replaced with exact data Moore et al used for temp
     dice_temp_file = pulse ? "dice_temp_2005_2300_pulse_2015.csv" : "dice_temp_2005_2300.csv"
     dice_temp = readdlm(joinpath(@__DIR__, "../data/DICE climate output", dice_temp_file))[:]      
 
@@ -23,8 +23,8 @@ function get_model(gtap; pulse=false)
     _load_fund_param(fn) = Array{Float64, 1}(readdlm(joinpath(fund_datadir, fn), ',', skipstart=1)[:,2])    # specific to FUND regional parameter file formatting
 
     params = Dict{String, Any}([
-        "population" =>  ssp2_population,
-        "income" =>      ssp2_income,
+        "population" =>  usg2_population,
+        "income" =>      usg2_income,
         "pop90" =>       _load_fund_param("pop90.csv"),
         "gdp90" =>       _load_fund_param("gdp90.csv"),
         "temp" =>        dice_temp,
