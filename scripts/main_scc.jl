@@ -4,15 +4,16 @@
 include("../src/MooreAg.jl")
 
 discount_rate = 0.03
+horizon = 2100
 
 output_dir = joinpath(@__DIR__, "../output/AgSCC/")
 mkpath(output_dir)
 
-f = open(joinpath(output_dir, "ag_scc.csv"), "w")
+f = open(joinpath(output_dir, "ag_scc_$horizon.csv"), "w")
 
 for gtap in MooreAg.gtaps
 
-    ag_scc = MooreAg.get_ag_scc(gtap, rate=discount_rate)
+    ag_scc = MooreAg.get_ag_scc(gtap, rate=discount_rate, horizon=horizon)
     println(gtap, ": \$", ag_scc)
     write(f, "$gtap,$ag_scc\n")
 end

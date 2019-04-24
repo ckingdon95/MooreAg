@@ -49,7 +49,7 @@ end
 # end
 
 # Calculates the Ag SCC for a pulse in 2015 DICE temperature series and the specified discount rate
-function get_ag_scc(gtap; rate = 0.03)
+function get_ag_scc(gtap; rate = 0.03, horizon = _default_horizon)
 
     # Run base model
     base = get_model(gtap)
@@ -66,8 +66,10 @@ function get_ag_scc(gtap; rate = 0.03)
     # calculate SCC
     pyear = 2015
     start_idx = findfirst(isequal(pyear), years)
-    discount_factor = [(1 + rate) ^ (-1 * t) for t in 0:length(years)-start_idx]
-    ag_scc = sum(global_diff[start_idx:end] .* discount_factor)
+    end_idx = findfirst(isequal(horizon), years)
+    discount_factor = [(1 + rate) ^ (-1 * t) for t in 0:end_idx-start_idx]
+    npv = global_diff[start_idx:end_idx] .* discount_factor
+    ag_scc = sum(npv) * 12/44   # go from $/ton C to $/ton CO2
 
     return ag_scc
 end

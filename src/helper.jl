@@ -2,6 +2,7 @@ using Interpolations
 
 const years = 2005:2300 #TODO: confirm what years Moore et al ran for
 const gtaps = ["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", "lowDF", "midDF"]    # names of the five different welfare dataframes
+const _default_horizon = 2300   # default end of SCC calculation
 
 # Moore et al uses regions in alphabetical order; need to be conscious of switching the regional ordering for running with FUND parameters
 alpha_order = ["ANZ","CAM","CAN","CEE","CHI","FSU","JPK","MDE","NAF","SAM","SAS","SEA","SIS","SSA","USA","WEU"]
