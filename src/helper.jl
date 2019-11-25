@@ -1,8 +1,16 @@
 using Interpolations
 
-const years = 2005:2300 #TODO: confirm what years Moore et al ran for
+# const years = 2005:2300 #TODO: confirm what years Moore et al ran for
+const years = 2000:10:2300  # TODO: how to run on 10 year timesteps?
 const gtaps = ["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", "lowDF", "midDF"]    # names of the five different welfare dataframes
 const _default_horizon = 2300   # default end of SCC calculation
+
+const pulse_year = 2020
+
+const USD2005to1995 = 0.819710818   # from Delavane
+
+const fund_datadir = joinpath(@__DIR__, "../data/FUND params")
+const dice_datadir = joinpath(@__DIR__, "../data/DICE climate output")
 
 # Moore et al uses regions in alphabetical order; need to be conscious of switching the regional ordering for running with FUND parameters
 alpha_order = ["ANZ","CAM","CAN","CEE","CHI","FSU","JPK","MDE","NAF","SAM","SAS","SEA","SIS","SSA","USA","WEU"]

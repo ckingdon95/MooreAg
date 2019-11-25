@@ -4,7 +4,7 @@
 include("../src/MooreAg.jl")
 
 discount_rate = 0.03
-horizon = 2100
+horizon = 2300
 
 output_dir = joinpath(@__DIR__, "../output/AgSCC/")
 mkpath(output_dir)

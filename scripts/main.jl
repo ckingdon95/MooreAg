@@ -7,7 +7,7 @@ include("../src/MooreAg.jl")
 output_dir = joinpath(@__DIR__, "../output/AgLossGTAP/")
 mkpath(output_dir)
 
-for gtap in MooreAgModel.gtaps
+for gtap in MooreAg.gtaps
 
     m = MooreAg.get_model(gtap)
     run(m)
