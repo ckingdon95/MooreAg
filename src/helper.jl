@@ -1,7 +1,6 @@
 using Interpolations
 
-# const years = 2005:2300 #TODO: confirm what years Moore et al ran for
-const years = 2000:10:2300  # TODO: how to run on 10 year timesteps?
+const years = 2000:10:2300  # years used by Moore et al
 const gtaps = ["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", "lowDF", "midDF"]    # names of the five different welfare dataframes
 const _default_horizon = 2300   # default end of SCC calculation
 

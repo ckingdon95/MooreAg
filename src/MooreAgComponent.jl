@@ -28,9 +28,7 @@
             ypc90 = p.gdp90[r] / p.pop90[r] * 1000.0
 
             v.agrish[t, r] = p.agrish0[r] * (ypc / ypc90)^(-p.agel)
-        end
 
-        for r in d.regions
             # Interpolate for p.temp, using the three gtap welfare points with the additional origin (0,0) point
             extrapolated_loss = linear_interpolate([0 p.gtap_df[r, :]...][:], collect(0:3), p.temp[t])
 

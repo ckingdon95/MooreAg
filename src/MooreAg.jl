@@ -37,7 +37,7 @@ function get_model(gtap; pulse=false)
 end
 
 
-# not yet correctly implemented
+# not yet implemented
 # function get_model_quadratic(gtap)
 #     m = get_model(gtap)
 #     replace_comp!(m, MooreAgComponent_quadratic, :agriculture)
@@ -51,22 +51,23 @@ function get_ag_scc(gtap; rate = 0.03, horizon = _default_horizon)
     base_m = get_model(gtap)
     run(base_m)
 
-    # Run model with pulse in 2015
+    # Run model with pulse in 2020
     pulse = get_model(gtap, pulse=true)
     run(pulse)
 
-    # calculate SCC based on annually interpolated marginal damages (sum across regions to global, then interpolate)
-    annual_years = collect(2000:2300)
-    base_damages = linear_interpolate(dropdims(sum(base_m[:agriculture, :agcost], dims=2), dims=2), years, annual_years)
-    pulse_damages = linear_interpolate(dropdims(sum(pulse[:agriculture, :agcost], dims=2) ,dims=2), years, annual_years)
+    # calculate SCC 
+    base_damages = dropdims(sum(base_m[:agriculture, :agcost], dims=2), dims=2)
+    pulse_damages = dropdims(sum(pulse[:agriculture, :agcost], dims=2), dims=2)
     diff = -1 * (pulse_damages - base_damages) * 10^9 / 10^9 # 10^9 for billions of dollars; /10^9 for Gt pulse TODO: need to confirm that this is the same for Delavane's data
 
-    start_idx = findfirst(isequal(pulse_year), annual_years)
-    end_idx = findfirst(isequal(horizon), annual_years)
-    discount_factor = [(1 + rate) ^ (-1 * t) for t in 0:end_idx-start_idx]
+    start_idx = findfirst(isequal(pulse_year), years)
+    end_idx = findfirst(isequal(horizon), years)
 
-    npv = diff[start_idx:end_idx] .* discount_factor
-    ag_scc = sum(npv) * 12/44 # We don't have to go from $/ton C to $/ton CO2? it's already in CO2? TODO: is this in 1995$ from FUND? do we need to multiply by USD2005to1995
+    # Implement discounting as a step function as described by Delevane
+    discount_factor = [(1 + rate) ^ (-1 * t * 10) for t in 0:end_idx-start_idx]
+    npv = diff[start_idx:end_idx] .* 10 .* discount_factor  # multiply by 10 so that value is used for all 10 years
+
+    ag_scc = sum(npv) * 12/44 # go from $/ton C to $/ton CO2
 
     return ag_scc
 end
