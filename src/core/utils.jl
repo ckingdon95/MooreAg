@@ -6,8 +6,8 @@ const pulse_year = 2020
 
 const USD2005to1995 = 0.819710818   # from Delavane
 
-const fund_datadir = joinpath(@__DIR__, "../data/FUND params")
-const dice_datadir = joinpath(@__DIR__, "../data/DICE climate output")
+const fund_datadir = joinpath(@__DIR__, "../../data/FUND params")
+const dice_datadir = joinpath(@__DIR__, "../../data/DICE climate output")
 
 # Moore et al uses regions in alphabetical order; need to be conscious of switching the regional ordering for running with FUND parameters
 alpha_order = ["ANZ","CAM","CAN","CEE","CHI","FSU","JPK","MDE","NAF","SAM","SAS","SEA","SIS","SSA","USA","WEU"]
