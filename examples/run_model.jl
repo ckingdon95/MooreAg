@@ -1,6 +1,5 @@
 using Mimi
-
-include("../src/MooreAg.jl")
+using MooreAg
 
 m = MooreAg.get_model("midDF")
 run(m)

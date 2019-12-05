@@ -2,7 +2,8 @@
 # It runs for all five gtap DFS (two AgMIP DFs and the low, mid, and high meta-analysis DFs).
 # The variable `AgLossGTAP` (percent loss in the ag sector) is saved for each DF in `output/AgLossGTAP`. 
 
-include("../src/MooreAg.jl")
+using DelimitedFiles
+using MooreAg
 
 output_dir = joinpath(@__DIR__, "../output/AgLossGTAP/")
 mkpath(output_dir)

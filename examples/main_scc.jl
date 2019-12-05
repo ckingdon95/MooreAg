@@ -2,7 +2,7 @@
 # temperature series, then calculates the resulting SCC for a discount rate of 3%.
 # Does this for all 5 gtaps and saves to `ouput/AgSCC/ag_scc.csv`
 
-include("../src/MooreAg.jl")
+using MooreAg
 
 discount_rate = 0.03
 horizon = 2300

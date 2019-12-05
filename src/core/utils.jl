@@ -18,7 +18,7 @@ const switch_region_indices = [findfirst(isequal(region), alpha_order) for regio
 # Returns the Moore gtap data points (16 regions x 3 points) in the FUND regional order
 function get_gtap_df(gtap::String)
     gtap in gtaps ? nothing : error("Unknown gtap dataframe specification: $gtap.") # check that the provided gtap name is a valid name
-    gtap_dir = joinpath(@__DIR__, "../data/GTAP DFs")   # The five welfare dataframes from Fran Moore are in this folder
+    gtap_dir = joinpath(@__DIR__, "../../data/GTAP DFs")   # The five welfare dataframes from Fran Moore are in this folder
     gtap_data = Array(readdlm(joinpath(gtap_dir, "$gtap.csv"), ',', skipstart=1)')
     return gtap_data[switch_region_indices, :]
 end 
