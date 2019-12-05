@@ -2,13 +2,13 @@
     get_model(gtap::String; pulse::Bool=false)
 
 Return a Mimi model with one component, the Moore Agriculture component. The user must 
-specify the `gtap` input parameter as one of ["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
+specify the `gtap` input parameter as one of ["AgMIP\_AllDF", "AgMIP\_NoNDF", "highDF", 
 "lowDF", "midDF"], indicating which gtap damage function the component should use. 
 
 The model has a time dimension of 2000:10:2300, and the regions are the same as the FUND model. 
 
 Population and income levels are set to values from the USG2 MERGE Optimistic scenario. 
-Temperature is set to output from the DICE model. If the user specifies `pulse`=true, then 
+Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
 tmeperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
 """
 function get_model(gtap::String; pulse::Bool=false)
