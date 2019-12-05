@@ -1,7 +1,5 @@
-﻿using Mimi
-
-# Moore et al Agricutlure component (with linear interpolation between gtap temperature points)
-@defcomp MooreAgComponent begin
+﻿# Moore et al Agriculture component (with linear interpolation between gtap temperature points)
+@defcomp Agriculture begin
     regions = Index()
 
     gdp90 = Parameter(index=[regions])
@@ -44,7 +42,7 @@ end
 
 # Moore et al Agricutlure component with quadratic interpolation
 # TODO: need to confirm how quadratic interpolation was performed
-# @defcomp MooreAgComponent_quadratic begin
+# @defcomp Agriculture_quadratic begin
 #     regions = Index()
 
 #     gdp90 = Parameter(index=[regions])
