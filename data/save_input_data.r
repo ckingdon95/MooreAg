@@ -1,6 +1,6 @@
 # 1. Read in variables from Delavane
 
-load("../From Fran Moore/SCCinputs.rdata")
+load("From Fran Moore/SCCinputs.rdata")
 
 # 2. Save USG2 socioeconomics pathways
 
