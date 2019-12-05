@@ -1,9 +1,9 @@
 """
-    get_model(gtap::String; pulse::Bool=false)
+    MooreAg.get_model(gtap::String; pulse::Bool=false)
 
 Return a Mimi model with one component, the Moore Agriculture component. The user must 
-specify the `gtap` input parameter as one of ["AgMIP\_AllDF", "AgMIP\_NoNDF", "highDF", 
-"lowDF", "midDF"], indicating which gtap damage function the component should use. 
+specify the `gtap` input parameter as one of `["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
+"lowDF", "midDF"]`, indicating which gtap damage function the component should use. 
 
 The model has a time dimension of 2000:10:2300, and the regions are the same as the FUND model. 
 
@@ -50,7 +50,7 @@ end
 # 
 
 """
-    get_ag_scc(gtap::String; rate::Float64 = 0.03, horizon::Int = _default_horizon)
+    MooreAg.get_ag_scc(gtap::String; rate::Float64 = 0.03, horizon::Int = _default_horizon)
 
 Return the Agricultural SCC for a pulse in 2020 DICE temperature series and constant 
 discounting with the specified keyword argument `rate`. Optional keyword argument `horizon` 
