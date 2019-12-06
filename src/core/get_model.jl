@@ -13,6 +13,8 @@ tmeperature is set to output from the DICE model with a 1 GtC pulse of CO2 emiss
 """
 function get_model(gtap::String; pulse::Bool=false)
 
+    gtap in gtaps ? nothing : error("Unknown GTAP dataframe specification: \"$gtap\". Must be one of the following: $gtaps")
+
     # Read in the USG2 socioeconomics data 
     usg2_population = Array{Float64, 2}(readdlm(joinpath(fund_datadir, "usg2_population.csv"),',')[2:end, 2:end])   # Saved from SCCinputs.rdata from Delavane
     usg2_income = Array{Float64, 2}(readdlm(joinpath(fund_datadir, "usg2_income.csv"),',')[2:end, 2:end])   # Saved from SCCinputs.rdata from Delavane
@@ -27,14 +29,15 @@ function get_model(gtap::String; pulse::Bool=false)
         "pop90" =>       usg2_population[1, :],         # 1990 is the first row
         "gdp90" =>       usg2_income[1, :],             # 1990 is the first row
         "temp" =>        dice_temp,
-        "agrish0" =>     Array{Float64, 1}(readdlm(joinpath(fund_datadir, "agrish0.csv"), ',', skipstart=1)[:,2])
+        "agrish0" =>     Array{Float64, 1}(readdlm(joinpath(fund_datadir, "agrish0.csv"), ',', skipstart=1)[:,2]),
+        "gtap_df_all" => gtap_df_all
     ])
 
     m = Model()
     set_dimension!(m, :time, years)       # const `years` defined in helper.jl
     set_dimension!(m, :regions, fund_regions)   # const `fund_regions` defined in helper.jl
     add_comp!(m, Agriculture)
-    set_param!(m, :Agriculture, :gtap_df, get_gtap_df(gtap))
+    set_param!(m, :Agriculture, :gtap_spec, gtap)
     set_leftover_params!(m, params)
     return m
 end
@@ -50,14 +53,14 @@ end
 # 
 
 """
-    MooreAg.get_ag_scc(gtap::String; rate::Float64 = 0.03, horizon::Int = _default_horizon)
+    MooreAg.get_ag_scc(gtap::String; prtp::Float64 = 0.03, horizon::Int = _default_horizon)
 
 Return the Agricultural SCC for a pulse in 2020 DICE temperature series and constant 
-discounting with the specified keyword argument `rate`. Optional keyword argument `horizon` 
-can specify the final year of marginal damages to be included in the SCC calculation, with 
-a default year of 2300.
+pure rate of time preference discounting with the specified keyword argument `prtp`. 
+Optional keyword argument `horizon` can specify the final year of marginal damages to be 
+included in the SCC calculation, with a default year of 2300.
 """
-function get_ag_scc(gtap::String; rate::Float64 = 0.03, horizon::Int = _default_horizon)
+function get_ag_scc(gtap::String; prtp::Float64 = 0.03, horizon::Int = _default_horizon)
 
     horizon in years ? nothing : error("Invalid value: $horizon for `horizon`, must be within the model years.")
 
@@ -78,7 +81,7 @@ function get_ag_scc(gtap::String; rate::Float64 = 0.03, horizon::Int = _default_
     end_idx = findfirst(isequal(horizon), years)
 
     # Implement discounting as a 10-year step function as described by Delevane
-    discount_factor = [(1 + rate) ^ (-1 * t * 10) for t in 0:end_idx-start_idx]
+    discount_factor = [(1 + prtp) ^ (-1 * t * 10) for t in 0:end_idx-start_idx]
     npv = marginal_damages[start_idx:end_idx] .* 10 .* discount_factor  # multiply by 10 so that value of damages is used for all 10 years
 
     ag_scc = sum(npv) 

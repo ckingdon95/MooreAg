@@ -23,6 +23,8 @@ function get_gtap_df(gtap::String)
     return gtap_data[switch_region_indices, :]
 end 
 
+const gtap_df_all = reshape(reduce(hcat, [get_gtap_df(gtap) for gtap in gtaps]), (16, 3, 5))
+
 # helper function for linear interpolation
 function linear_interpolate(values::AbstractArray, original_domain::AbstractArray, new_domain::Union{AbstractArray, Number})
     # Build the interpolation object with linear interpolation between the provided points, and extrapolation beyond the points
