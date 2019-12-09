@@ -23,11 +23,13 @@ m = MooreAg.get_model("midDF")  # specify which of the 5 available GTAP datafram
 run(m)
 explore(m)
 
-update_param!(m, :gtap_spec, "lowDF")   # update the specification for which GTAP dataframe to use
+update_param!(m, :gtap_spec, "AgMIP_NoNDF")   # update the specification for which GTAP dataframe to use
 run(m)
 explore(m)
 
-ag_scc = MooreAg.get_ag_scc("midDF", prtp=0.03)
+# Compare the values of the agricultural SCC with and without limiting how big damages can be 
+ag_scc1 = MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=true)
+ag_scc2 = MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=false)
 ```
 
 ## Component description
@@ -38,8 +40,8 @@ Input parameters:
 - `temp`: global temperature series
 - `gtap_spec`: A `String` specifying which GTAP temperature-welfare results dataframe from Moore et al to use for the damage function. Must be one of `"AgMIP_AllDF"`, `"AgMIP_NoNDF"`, `"highDF"`, `"lowDF"`, or `"midDF"`. See documentation for a description of these choices.
 - `gtap_df_all`: Holds temperature-welfare data for all five `gtap_spec` choices. Only the one specified by `gtap_spec` will be used when the component is run
-- `floor_on_damages`: A `Bool` specifying whether or not to limit damages (the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `true`.
-- `ceiling_on_benefits`: A `Bool` specifying whether or not to limit benefits (the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `false`.
+- `floor_on_damages`: A `Bool` specifying whether or not to limit damages (negative values of the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `true`.
+- `ceiling_on_benefits`: A `Bool` specifying whether or not to limit benefits (positive values of the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `false`.
 - `agrish0`: Initial agricultural share of GDP
 - `agel`: elasticity
 - `gdp90`
