@@ -9,5 +9,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "https://github.com/ckingdon95/MooreAg.git",
+    repo = "https://github.com/ckingdon95/MooreAg.jl.git",
 )

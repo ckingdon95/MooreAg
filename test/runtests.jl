@@ -25,4 +25,4 @@ update_param!(m, :gtap_spec, "foo")
 @test MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=false) > MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=true)
 
 # Test the ceiling on benefits
-@test MooreAg.get_ag_scc("highDF", prtp=0.03, ceiling_on_benefits=false) == MooreAg.get_ag_scc("highDF", prtp=0.03, ceiling_on_benefits=true) # ceiling on benefits is never binding
+@test MooreAg.get_ag_scc("lowDF", prtp=0.03, ceiling_on_benefits=false) < MooreAg.get_ag_scc("lowDF", prtp=0.03, ceiling_on_benefits=true) # ceiling on benefits is only binding in the "lowDF" scenario
