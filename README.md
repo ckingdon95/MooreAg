@@ -2,8 +2,6 @@
 
 The `MooreAg` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
 
-Please see the [documentation]("github.com/ckingdon95/MooreAg.jl.git") for a full description of the component.
-
 ## Installation
 
 If you are new to the Julia language or to the Mimi software package, please see the [Mimi documentation](https://www.mimiframework.org/Mimi.jl/stable/installation/) for installation of Julia and Mimi.
@@ -15,8 +13,8 @@ pkg> add MooreAg, Mimi
 ```
 
 ## Example use
-See documentation for a full description of the available functionality.
-```
+See docstrings for a full description of the available functionality.
+```julia
 using MooreAg, Mimi
 
 m = MooreAg.get_model("midDF")  # specify which of the 5 available GTAP dataframes of temperature-welfare results to use for the damage function
@@ -51,3 +49,49 @@ Calculated variables:
 - `AgLossGTAP`: Percent impact on the agricultural sector in each year
 - `agcost`: Total impact on the agricultural sector in each year. (A negative value means damages, positive values mean benefits.)
 - `gtap_df`: The selected temperature-welfare data used for the damage function, specified by the `gtap_spec` parameter, selected from all the data held in `gtap_df_all`
+
+## Docstrings of available functions
+
+*MooreAg.get_model*
+```julia
+    MooreAg.get_model(gtap::String; 
+        pulse::Bool=false,
+        floor_on_damages::Bool = true,
+        ceiling_on_benefits::Bool = false)
+```
+Return a Mimi model with one component, the Moore `Agriculture` component. The user must 
+specify the `gtap` input parameter as one of `["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
+"lowDF", "midDF"]`, indicating which gtap damage function the component should use. 
+
+The model has a time dimension of 2000:10:2300, and the regions are the same as the FUND model. 
+
+Population and income levels are set to values from the USG2 MERGE Optimistic scenario. 
+Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
+temperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
+
+If `floor_on_damages` = true, then the agricultural damages (negative values of the 
+`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+agricultural sector in each region.
+If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
+`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+agricultural sector in each region.
+
+*MooreAge.get_ag_scc*
+```
+    MooreAg.get_ag_scc(gtap::String; 
+        prtp::Float64 = 0.03, 
+        horizon::Int = _default_horizon,
+        floor_on_damages::Bool = true,
+        ceiling_on_benefits::Bool = false)
+```
+Return the Agricultural SCC for a pulse in 2020 DICE temperature series and constant 
+pure rate of time preference discounting with the specified keyword argument `prtp`. 
+Optional keyword argument `horizon` can specify the final year of marginal damages to be 
+included in the SCC calculation, with a default year of 2300.
+
+If `floor_on_damages` = true, then the agricultural damages (negative values of the 
+`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+agricultural sector in each region.
+If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
+`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+agricultural sector in each region.
