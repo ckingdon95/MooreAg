@@ -54,16 +54,6 @@ function get_model(gtap::String;
     return m
 end
 
-
-# not yet implemented
-# function get_model_quadratic(gtap)
-#     m = get_model(gtap)
-#     replace_comp!(m, Agriculture_quadratic, :Agriculture)
-#     return m
-# end
-
-# 
-
 """
     MooreAg.get_ag_scc(gtap::String; 
         prtp::Float64 = 0.03, 
