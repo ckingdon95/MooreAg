@@ -12,10 +12,10 @@ included in the SCC calculation, with a default year of 2300.
 
 If `floor_on_damages` = true, then the agricultural damages (negative values of the 
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricutlural sector in each region.
+agricultural sector in each region.
 If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricutlural sector in each region.
+agricultural sector in each region.
 """
 function get_ag_scc(gtap::String; 
     prtp::Float64 = 0.03, 

@@ -1,5 +1,8 @@
 """
-    MooreAg.get_model(gtap::String; pulse::Bool=false)
+    MooreAg.get_model(gtap::String; 
+        pulse::Bool=false,
+        floor_on_damages::Bool = true,
+        ceiling_on_benefits::Bool = false)
 
 Return a Mimi model with one component, the Moore Agriculture component. The user must 
 specify the `gtap` input parameter as one of `["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
@@ -9,14 +12,14 @@ The model has a time dimension of 2000:10:2300, and the regions are the same as 
 
 Population and income levels are set to values from the USG2 MERGE Optimistic scenario. 
 Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
-tmeperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
+temperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
 
 If `floor_on_damages` = true, then the agricultural damages (negative values of the 
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricutlural sector in each region.
+agricultural sector in each region.
 If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricutlural sector in each region.
+agricultural sector in each region.
 """
 function get_model(gtap::String; 
     pulse::Bool=false,
