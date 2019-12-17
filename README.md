@@ -52,7 +52,7 @@ Calculated variables:
 
 ## Docstrings of available functions
 
-*MooreAg.get_model*
+**MooreAg.get_model**
 ```julia
     MooreAg.get_model(gtap::String; 
         pulse::Bool=false,
@@ -76,7 +76,7 @@ If `ceiling_on_benefits` = true, then the agricultural benefits (positive values
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
 
-*MooreAge.get_ag_scc*
+**MooreAg.get_ag_scc**
 ```
     MooreAg.get_ag_scc(gtap::String; 
         prtp::Float64 = 0.03, 
