@@ -53,11 +53,11 @@ Calculated variables:
 ## Docstrings of available functions
 
 **MooreAg.get_model**
-```julia
-    MooreAg.get_model(gtap::String; 
-        pulse::Bool=false,
-        floor_on_damages::Bool = true,
-        ceiling_on_benefits::Bool = false)
+```
+MooreAg.get_model(gtap::String; 
+    pulse::Bool=false,
+    floor_on_damages::Bool = true,
+    ceiling_on_benefits::Bool = false)
 ```
 Return a Mimi model with one component, the Moore `Agriculture` component. The user must 
 specify the `gtap` input parameter as one of `["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
@@ -78,11 +78,11 @@ agricultural sector in each region.
 
 **MooreAg.get_ag_scc**
 ```
-    MooreAg.get_ag_scc(gtap::String; 
-        prtp::Float64 = 0.03, 
-        horizon::Int = _default_horizon,
-        floor_on_damages::Bool = true,
-        ceiling_on_benefits::Bool = false)
+MooreAg.get_ag_scc(gtap::String; 
+    prtp::Float64 = 0.03, 
+    horizon::Int = _default_horizon,
+    floor_on_damages::Bool = true,
+    ceiling_on_benefits::Bool = false)
 ```
 Return the Agricultural SCC for a pulse in 2020 DICE temperature series and constant 
 pure rate of time preference discounting with the specified keyword argument `prtp`. 
