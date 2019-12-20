@@ -1,28 +1,11 @@
-# Need to test the results against the R code output values
-# Instead of testing the whole SCC, can just test the AgLosstGTAP variable
-
+using DelimitedFiles
 using Mimi
 using MooreAg
 using Test
 
-discount_rate = 0.03
-horizon = 2300
+@testset "MooreAg" begin
 
-for gtap in MooreAg.gtaps
-    ag_scc = MooreAg.get_ag_scc(gtap, prtp=discount_rate, horizon=horizon)
-    println(gtap, ": \$", ag_scc)
+include("test_api.jl")
+include("test_validation.jl")
+
 end
-
-# test invalid GTAP spec:
-@test_throws ErrorException m = MooreAg.get_model("foo")
-m = MooreAg.get_model("midDF")
-update_param!(m, :gtap_spec, "foo")
-@test_throws ErrorException run(m)  # should error with helpful message
-
-# Test the floor on damages
-@test MooreAg.get_ag_scc("midDF", prtp=0.03, floor_on_damages=false) > MooreAg.get_ag_scc("midDF", prtp=0.03, floor_on_damages=true)
-@test MooreAg.get_ag_scc("highDF", prtp=0.03, floor_on_damages=false) == MooreAg.get_ag_scc("highDF", prtp=0.03, floor_on_damages=true) # in the "high" case, no regions hit 100% loss so the SCC values are the same here
-@test MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=false) > MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=true)
-
-# Test the ceiling on benefits
-@test MooreAg.get_ag_scc("lowDF", prtp=0.03, ceiling_on_benefits=false) < MooreAg.get_ag_scc("lowDF", prtp=0.03, ceiling_on_benefits=true) # ceiling on benefits is only binding in the "lowDF" scenario
