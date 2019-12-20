@@ -34,6 +34,10 @@ function get_ag_scc(gtap::String;
     run(pulse_m)
 
     # calculate SCC 
+    return _calculate_ag_scc(base_m, pulse_m, prtp, horizon)
+end
+
+function _calculate_ag_scc(base_m::Model, pulse_m::Model, prtp, horizon=_default_horizon)
     base_damages = dropdims(sum(base_m[:Agriculture, :agcost], dims=2), dims=2)
     pulse_damages = dropdims(sum(pulse_m[:Agriculture, :agcost], dims=2), dims=2)
     marginal_damages = -1 * (pulse_damages - base_damages) * 10^9 / 10^9 * 12/44  # 10^9 for billions of dollars; /10^9 for Gt pulse; 12/44 to go from $/ton C to $/ton CO2
@@ -46,6 +50,5 @@ function get_ag_scc(gtap::String;
     npv = marginal_damages[start_idx:end_idx] .* 10 .* discount_factor  # multiply by 10 so that value of damages is used for all 10 years
 
     ag_scc = sum(npv) 
-
     return ag_scc
 end

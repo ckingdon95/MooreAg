@@ -1,5 +1,16 @@
-﻿# Moore et al Agriculture component (with linear interpolation between gtap temperature points)
-@defcomp Agriculture begin
+# helper function used by the component definition below
+function _get_scaled_effect(_range::Vector{Float64}, _scale::Float64)
+    if _scale < 0.5
+        low, high = _range[1], _range[2]
+        return low + ((_scale - 0.025)/(0.5 - 0.025)) * (high - low)
+    else
+        low, high = _range[2], _range[3]
+        return low + ((_scale - 0.5)/(0.975 - 0.5)) * (high - low)
+    end
+end
+
+# A version of the Moore et al Agriculture component to be used in Monte Carlo analysis.
+@defcomp AgricultureMC begin
     regions = Index()
 
     gdp90 = Parameter(index=[regions])
@@ -19,21 +30,23 @@
 
     AgLossGTAP = Variable(index=[time,regions]) # Moore's fractional loss (intermediate variable for calculating agcost)
 
-    gtap_spec::String = Parameter()
-    gtap_df_all = Parameter(index = [regions, 3, 5])
+    yield_scale = Parameter(default=0.5)   # scaling parameter for Monte Carlo simulation. default is the median
+    gtap_df_all_mcs = Parameter(index = [regions, 3, 3]) # In the regular component, there ar e5 choices. Here we just have the low, mid, and high from the meta analysis. 
     gtap_df = Variable(index=[regions, 3])  # three temperature data points per region
 
     floor_on_damages::Bool = Parameter(default = true)
     ceiling_on_benefits::Bool = Parameter(default = false)
 
-    function run_timestep(p, v, d, t)
+    agcost_global = Variable(index=[time])
 
-        # Access which of the 5 possible DFs to use for the damage function
-        gtap_idx = findfirst(isequal(p.gtap_spec), gtaps)
-        gtap_idx === nothing ? error("Unknown GTAP dataframe specification: \"$(p.gtap_spec)\". Must be one of the following: $gtaps") : nothing
-        v.gtap_df[:, :] = p.gtap_df_all[:, :, gtap_idx]
+    function run_timestep(p, v, d, t)
                 
         for r in d.regions
+            # Calculate the damage function parameters based on the sampled yield_scale parameter
+            for temp in [1,2,3]
+                v.gtap_df[r, temp] = _get_scaled_effect(p.gtap_df_all_mcs[r, temp, :], p.yield_scale)
+            end
+
             ypc = p.income[t, r] / p.population[t, r] * 1000.0
             ypc90 = p.gdp90[r] / p.pop90[r] * 1000.0
 
@@ -48,5 +61,6 @@
             # Calculate total cost for the ag sector based on the percent loss
             v.agcost[t, r] = p.income[t, r] * v.agrish[t, r] * v.AgLossGTAP[t, r]  # take out the -1 from original fund component here because damages are the other sign in Moore data
         end
+        v.agcost_global[t] = sum(v.agcost[t, :])
     end
 end

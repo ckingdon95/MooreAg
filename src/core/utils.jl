@@ -24,6 +24,7 @@ function get_gtap_df(gtap::String)
 end 
 
 const gtap_df_all = reshape(reduce(hcat, [get_gtap_df(gtap) for gtap in gtaps]), (16, 3, 5))
+const gtap_df_all_mcs = reshape(reduce(hcat, [get_gtap_df(gtap) for gtap in ["lowDF", "midDF", "highDF"]]), (16, 3, 3))
 
 # helper function for linear interpolation
 function linear_interpolate(values::AbstractArray, original_domain::AbstractArray, new_domain::Union{AbstractArray, Number})

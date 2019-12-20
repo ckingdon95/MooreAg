@@ -2,10 +2,10 @@
 
 @testset "API" begin
 
-for gtap in MooreAg.gtaps
-    ag_scc = MooreAg.get_ag_scc(gtap, prtp=0.03, horizon=2300)
-    println(gtap, ": \$", ag_scc)
-end
+# test horizon
+ag_scc1 = MooreAg.get_ag_scc("AgMIP_All", prtp=0.03, horizon=2300)
+ag_scc2 = MooreAg.get_ag_scc("AgMIP_All", prtp=0.03, horizon=2100)
+@test ag_scc1 > ag_scc2
 
 # test invalid GTAP spec:
 @test_throws ErrorException m = MooreAg.get_model("foo")
