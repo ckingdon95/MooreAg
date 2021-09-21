@@ -1,3 +1,6 @@
+using DelimitedFiles
+using Mimi
+
 """
     MooreAg.get_model(gtap::String; 
         pulse::Bool=false,
@@ -21,10 +24,11 @@ If `ceiling_on_benefits` = true, then the agricultural benefits (positive values
 `agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
 """
-function get_model(gtap::String; 
-    pulse::Bool=false,
-    floor_on_damages::Bool = true,
-    ceiling_on_benefits::Bool = false)
+function get_model( gtap::String; 
+                    pulse::Bool=false,
+                    floor_on_damages::Bool = true,
+                    ceiling_on_benefits::Bool = false
+                )
 
     gtap in gtaps ? nothing : error("Unknown GTAP dataframe specification: \"$gtap\". Must be one of the following: $gtaps")
 
@@ -36,23 +40,28 @@ function get_model(gtap::String;
     dice_temp_file = pulse ? "dice_temp_pulse.csv" : "dice_temp.csv"
     dice_temp = readdlm(joinpath(dice_datadir, dice_temp_file), Float64)[:]      
 
-    params = Dict{String, Any}([
-        "population" =>  usg2_population[2:end, :],     # 2000:10:2300
-        "income" =>      usg2_income[2:end, :],         # 2000:10:2300
-        "pop90" =>       usg2_population[1, :],         # 1990 is the first row
-        "gdp90" =>       usg2_income[1, :],             # 1990 is the first row
-        "temp" =>        dice_temp,
-        "agrish0" =>     Array{Float64, 1}(readdlm(joinpath(fund_datadir, "agrish0.csv"), ',', skipstart=1)[:,2]),
-        "gtap_df_all" => gtap_df_all
+    params = Dict{Tuple, Any}([
+        (:Agriculture, :population) =>  usg2_population[2:end, :],     # 2000:10:2300
+        (:Agriculture, :income) =>      usg2_income[2:end, :],         # 2000:10:2300
+        (:Agriculture, :pop90) =>       usg2_population[1, :],         # 1990 is the first row
+        (:Agriculture, :gdp90) =>       usg2_income[1, :],             # 1990 is the first row
+        (:Agriculture, :temp) =>        dice_temp,
+        (:Agriculture, :agrish0) =>     Array{Float64, 1}(readdlm(joinpath(fund_datadir, "agrish0.csv"), ',', skipstart=1)[:,2]),
+        (:Agriculture, :gtap_df_all) => gtap_df_all
     ])
 
     m = Model()
+
     set_dimension!(m, :time, years)       # const `years` defined in helper.jl
     set_dimension!(m, :regions, fund_regions)   # const `fund_regions` defined in helper.jl
+
     add_comp!(m, Agriculture)
-    set_param!(m, :Agriculture, :gtap_spec, gtap)
-    set_param!(m, :Agriculture, :floor_on_damages, floor_on_damages)
-    set_param!(m, :Agriculture, :ceiling_on_benefits, ceiling_on_benefits)
-    set_leftover_params!(m, params)
+
+    update_param!(m, :Agriculture, :gtap_spec, gtap)
+    update_param!(m, :Agriculture, :floor_on_damages, floor_on_damages)
+    update_param!(m, :Agriculture, :ceiling_on_benefits, ceiling_on_benefits)
+
+    update_leftover_params!(m, params)
+
     return m
 end

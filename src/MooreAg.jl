@@ -1,8 +1,10 @@
 module MooreAg 
 
+using Mimi
 using Interpolations
 using DelimitedFiles
-using Mimi
+using CSVFiles
+using DataFrames
 
 include("core/utils.jl")
 include("core/AgricultureComponent.jl")
