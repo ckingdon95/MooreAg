@@ -1,5 +1,9 @@
-﻿# Moore et al Agriculture component (with linear interpolation between gtap temperature points)
+﻿using Interpolations
+using Mimi
+
+# Moore et al Agriculture component (with linear interpolation between gtap temperature points)
 @defcomp Agriculture begin
+
     regions = Index()
 
     gdp90 = Parameter(index=[regions])
@@ -7,7 +11,7 @@
     pop90 = Parameter(index=[regions])
     population = Parameter(index=[time,regions])
 
-    agrish = Variable(index=[time,regions])     # agricutlural share of the economy
+    agrish = Variable(index=[time,regions])     # agricultural share of the economy
     agrish0 = Parameter(index=[regions])        # initial share 
     agel = Parameter(default = 0.31)            # elasticity
 
@@ -19,12 +23,12 @@
 
     AgLossGTAP = Variable(index=[time,regions]) # Moore's fractional loss (intermediate variable for calculating agcost)
 
-    gtap_spec::String = Parameter()
+    gtap_spec = Parameter{String}()
     gtap_df_all = Parameter(index = [regions, 3, 5])
     gtap_df = Variable(index=[regions, 3])  # three temperature data points per region
 
-    floor_on_damages::Bool = Parameter(default = true)
-    ceiling_on_benefits::Bool = Parameter(default = false)
+    floor_on_damages = Parameter{Bool}(default = true)
+    ceiling_on_benefits = Parameter{Bool}(default = false)
 
     function run_timestep(p, v, d, t)
 

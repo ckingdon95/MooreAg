@@ -12,7 +12,7 @@ for gtap in MooreAg.gtaps
 
     m = MooreAg.get_model(gtap)
     run(m)
-    AgLossGTAP = m[:agriculture, :AgLossGTAP]   # this is the percent loss variable calculated across all FUND regions and time periods (currently 2005 to 2300)
+    AgLossGTAP = m[:Agriculture, :AgLossGTAP]   # this is the percent loss variable calculated across all FUND regions and time periods (currently 2005 to 2300)
     writedlm(joinpath(output_dir, "AgLossGTAP_$gtap.csv"), AgLossGTAP, ',')
 
 end

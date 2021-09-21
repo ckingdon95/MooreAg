@@ -1,3 +1,6 @@
+using DelimitedFiles
+using Interpolations
+
 const years = 2000:10:2300  # years used by Moore et al
 const gtaps = ["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", "lowDF", "midDF"]    # names of the five different welfare dataframes
 const _default_horizon = 2300   # default end of SCC calculation
