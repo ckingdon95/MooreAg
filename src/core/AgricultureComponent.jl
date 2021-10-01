@@ -8,8 +8,8 @@ using Mimi
 
     gdp90 = Parameter(index=[fund_regions])
     income = Parameter(index=[time,fund_regions])
-    pop90 = Parameter(index=[fund_regions])
-    population = Parameter(index=[time,fund_regions])
+    pop90 = Parameter(index=[fund_regions], unit="million"))
+    population = Parameter(index=[time,fund_regions], unit="million")
 
     agrish = Variable(index=[time,fund_regions])     # agricultural share of the economy
     agrish0 = Parameter(index=[fund_regions])        # initial share 
@@ -17,7 +17,7 @@ using Mimi
 
     agcost = Variable(index=[time,fund_regions])     # This is the main damage variable (positive means benefits)
 
-    temp = Parameter(index=[time])              # Moore et al uses global temperature (original FUND ImpactAgriculture component uses regional temperature)
+    temp = Parameter(index=[time], unit="degC")              # Moore et al uses global temperature (original FUND ImpactAgriculture component uses regional temperature)
 
     # Moore additions:
 
