@@ -8,7 +8,7 @@ using Mimi
 
     gdp90 = Parameter(index=[fund_regions])
     income = Parameter(index=[time,fund_regions])
-    pop90 = Parameter(index=[fund_regions], unit="million"))
+    pop90 = Parameter(index=[fund_regions], unit="million")
     population = Parameter(index=[time,fund_regions], unit="million")
 
     agrish = Variable(index=[time,fund_regions])     # agricultural share of the economy
