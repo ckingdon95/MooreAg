@@ -4,28 +4,28 @@ using Mimi
 # Moore et al Agriculture component (with linear interpolation between gtap temperature points)
 @defcomp Agriculture begin
 
-    regions = Index()
+    fund_regions = Index()
 
-    gdp90 = Parameter(index=[regions])
-    income = Parameter(index=[time,regions])
-    pop90 = Parameter(index=[regions])
-    population = Parameter(index=[time,regions])
+    gdp90 = Parameter(index=[fund_regions])
+    income = Parameter(index=[time,fund_regions])
+    pop90 = Parameter(index=[fund_regions])
+    population = Parameter(index=[time,fund_regions])
 
-    agrish = Variable(index=[time,regions])     # agricultural share of the economy
-    agrish0 = Parameter(index=[regions])        # initial share 
+    agrish = Variable(index=[time,fund_regions])     # agricultural share of the economy
+    agrish0 = Parameter(index=[fund_regions])        # initial share 
     agel = Parameter(default = 0.31)            # elasticity
 
-    agcost = Variable(index=[time,regions])     # This is the main damage variable (positive means benefits)
+    agcost = Variable(index=[time,fund_regions])     # This is the main damage variable (positive means benefits)
 
     temp = Parameter(index=[time])              # Moore et al uses global temperature (original FUND ImpactAgriculture component uses regional temperature)
 
     # Moore additions:
 
-    AgLossGTAP = Variable(index=[time,regions]) # Moore's fractional loss (intermediate variable for calculating agcost)
+    AgLossGTAP = Variable(index=[time,fund_regions]) # Moore's fractional loss (intermediate variable for calculating agcost)
 
     gtap_spec = Parameter{String}()
-    gtap_df_all = Parameter(index = [regions, 3, 5])
-    gtap_df = Variable(index=[regions, 3])  # three temperature data points per region
+    gtap_df_all = Parameter(index = [fund_regions, 3, 5])
+    gtap_df = Variable(index=[fund_regions, 3])  # three temperature data points per region
 
     floor_on_damages = Parameter{Bool}(default = true)
     ceiling_on_benefits = Parameter{Bool}(default = false)
@@ -37,7 +37,7 @@ using Mimi
         gtap_idx === nothing ? error("Unknown GTAP dataframe specification: \"$(p.gtap_spec)\". Must be one of the following: $gtaps") : nothing
         v.gtap_df[:, :] = p.gtap_df_all[:, :, gtap_idx]
                 
-        for r in d.regions
+        for r in d.fund_regions
             ypc = p.income[t, r] / p.population[t, r] * 1000.0
             ypc90 = p.gdp90[r] / p.pop90[r] * 1000.0
 

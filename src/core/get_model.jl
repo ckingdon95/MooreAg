@@ -11,7 +11,7 @@ Return a Mimi model with one component, the Moore Agriculture component. The use
 specify the `gtap` input parameter as one of `["AgMIP_AllDF", "AgMIP_NoNDF", "highDF", 
 "lowDF", "midDF"]`, indicating which gtap damage function the component should use. 
 
-The model has a time dimension of 2000:10:2300, and the regions are the same as the FUND model. 
+The model has a time dimension of 2000:10:2300, and the fund_regions are the same as the FUND model. 
 
 Population and income levels are set to values from the USG2 MERGE Optimistic scenario. 
 Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
@@ -53,7 +53,7 @@ function get_model( gtap::String;
     m = Model()
 
     set_dimension!(m, :time, years)       # const `years` defined in helper.jl
-    set_dimension!(m, :regions, fund_regions)   # const `fund_regions` defined in helper.jl
+    set_dimension!(m, :fund_regions, fund_regions)   # const `fund_regions` defined in helper.jl
 
     add_comp!(m, Agriculture)
 
