@@ -4,7 +4,7 @@
 
 results = readdlm(joinpath(@__DIR__, "../data/validation/ag_scc.csv"), ',')
 mimi_sccs = Vector{Any}()
-i = 2
+global i = 2
 for gtap in MooreAg.gtaps 
     for dr in [0.025, 0.03, 0.05]
         println(gtap, dr)

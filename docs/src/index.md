@@ -4,7 +4,7 @@ The `MooreAg` package defines an `Agriculture` component to be used in Integrate
 
 ## The Agriculture Component
 
-The `Agriculture` component is a Mimi component implementing Moore et al's agricultural damage function. The component is defined in "src/AgricultureComponent.jl". It has a variable called `gtap_df` which is a 16 x 3 Array of percent welfare impact data (16 FUND regions x 3 temperature points). In the run_timestep function, this component takes temperature for that timestep and uses the gtap dataframe to linearly interpolate or extrapolate to get the percent impact for that timestep, saved in variable `AgLossGTAP`. 
+The `Agriculture` component is a Mimi component implementing Moore et al's agricultural damage function. The component is defined in "src/AgricultureComponent.jl". It has a variable called `gtap_df` which is a 16 x 3 Array of percent welfare impact data (16 FUND regions x 3 temperature points). In the run_timestep function, this component takes temperature for that timestep and uses the gtap dataframe to linearly interpolate or extrapolate to get the percent loss for that timestep, saved in variable `AgLossGTAP`. 
 
 There are 5 choices of temperature-welfare dataframes that can be used to form the basis of the damage function. They are:
 - "midDF" - the median result from Moore et al's meta analysis of yield responses

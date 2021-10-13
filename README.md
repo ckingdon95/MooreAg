@@ -38,16 +38,16 @@ Input parameters:
 - `temp`: global temperature series
 - `gtap_spec`: A `String` specifying which GTAP temperature-welfare results dataframe from Moore et al to use for the damage function. Must be one of `"AgMIP_AllDF"`, `"AgMIP_NoNDF"`, `"highDF"`, `"lowDF"`, or `"midDF"`. See documentation for a description of these choices.
 - `gtap_df_all`: Holds temperature-welfare data for all five `gtap_spec` choices. Only the one specified by `gtap_spec` will be used when the component is run
-- `floor_on_damages`: A `Bool` specifying whether or not to limit damages (negative values of the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `true`.
-- `ceiling_on_benefits`: A `Bool` specifying whether or not to limit benefits (positive values of the `agcost` variable) to 100% of the size of the agricultural sector. Default value is `false`.
+- `floor_on_damages`: A `Bool` specifying whether or not to limit damages to 100% of the size of the agricultural sector. Default value is `true`.
+- `ceiling_on_benefits`: A `Bool` specifying whether or not to limit benefits to 100% of the size of the agricultural sector. Default value is `false`.
 - `agrish0`: Initial agricultural share of GDP
 - `agel`: elasticity
 - `gdp90`
 - `pop90`
 
 Calculated variables:
-- `AgLossGTAP`: Percent impact on the agricultural sector in each year
-- `agcost`: Total impact on the agricultural sector in each year. (A negative value means damages, positive values mean benefits.)
+- `AgLossGTAP`: Percent loss on the agricultural sector in each year
+- `agcost`: Total cost on the agricultural sector in each year.
 - `gtap_df`: The selected temperature-welfare data used for the damage function, specified by the `gtap_spec` parameter, selected from all the data held in `gtap_df_all`
 
 ## Docstrings of available functions
@@ -69,11 +69,9 @@ Population and income levels are set to values from the USG2 MERGE Optimistic sc
 Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
 temperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
 
-If `floor_on_damages` = true, then the agricultural damages (negative values of the 
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+If `floor_on_damages` = true, then the agricultural damages in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
-If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+If `ceiling_on_benefits` = true, then the agricultural benefits in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
 
 **MooreAg.get_ag_scc**
@@ -89,9 +87,7 @@ pure rate of time preference discounting with the specified keyword argument `pr
 Optional keyword argument `horizon` can specify the final year of marginal damages to be 
 included in the SCC calculation, with a default year of 2300.
 
-If `floor_on_damages` = true, then the agricultural damages (negative values of the 
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+If `floor_on_damages` = true, then the agricultural damages in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
-If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
+If `ceiling_on_benefits` = true, then the agricultural benefits in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
