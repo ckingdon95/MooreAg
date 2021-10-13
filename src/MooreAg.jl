@@ -5,6 +5,7 @@ using Interpolations
 using DelimitedFiles
 using CSVFiles
 using DataFrames
+using Distributions
 
 include("core/utils.jl")
 include("core/AgricultureComponent.jl")
