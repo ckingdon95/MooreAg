@@ -15,7 +15,7 @@ using Mimi
     agrish0 = Parameter(index=[fund_regions])        # initial share 
     agel = Parameter(default = 0.31)            # elasticity
 
-    agcost = Variable(index=[time,fund_regions])     # This is the main damage variable (positive means benefits)
+    agcost = Variable(index=[time,fund_regions])     # This is the main damage variable
 
     temp = Parameter(index=[time], unit="degC")              # Moore et al uses global temperature (original FUND ImpactAgriculture component uses regional temperature)
 
