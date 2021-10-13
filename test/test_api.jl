@@ -9,9 +9,6 @@ end
 
 # test invalid GTAP spec:
 @test_throws ErrorException m = MooreAg.get_model("foo")
-m = MooreAg.get_model("midDF")
-update_param!(m, :Agriculture, :gtap_spec, "foo")
-@test_throws ErrorException run(m)  # should error with helpful message
 
 # Test the floor on damages
 @test MooreAg.get_ag_scc("midDF", prtp=0.03, floor_on_damages=false) > MooreAg.get_ag_scc("midDF", prtp=0.03, floor_on_damages=true)

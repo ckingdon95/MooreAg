@@ -55,7 +55,12 @@ function get_model( gtap::String;
 
     add_comp!(m, Agriculture)
 
-    update_param!(m, :Agriculture, :gtap_spec, gtap)
+    # Access which of the 5 possible DFs to use for the damage function
+    gtap_idx = findfirst(isequal(gtap), gtaps)
+    gtap_idx === nothing || error("Unknown GTAP dataframe specification: \"$gtap\". Must be one of the following: $gtaps")
+    gtap_df = gtap_df_all[:, :, gtap_idx]
+
+    update_param!(m, :Agriculture, :gtap_df, gtap_df)
     update_param!(m, :Agriculture, :floor_on_damages, floor_on_damages)
     update_param!(m, :Agriculture, :ceiling_on_benefits, ceiling_on_benefits)
 
