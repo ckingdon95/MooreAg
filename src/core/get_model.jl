@@ -17,12 +17,10 @@ Population and income levels are set to values from the USG2 MERGE Optimistic sc
 Temperature is set to output from the DICE model. If the user specifies `pulse=true`, then 
 temperature is set to output from the DICE model with a 1 GtC pulse of CO2 emissions in 2020.
 
-If `floor_on_damages` = true, then the agricultural damages (negative values of the 
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricultural sector in each region.
-If `ceiling_on_benefits` = true, then the agricultural benefits (positive values of the
-`agcost` variable) in each timestep will not be allowed to exceed 100% of the size of the 
-agricultural sector in each region.
+If `floor_on_damages` = true, then the agricultural damages in each timestep will not be allowed
+to exceed 100% of the size of the agricultural sector in each region.
+If `ceiling_on_benefits` = true, then the agricultural benefits in each timestep will not be
+allowed to exceed 100% of the size of the agricultural sector in each region.
 """
 function get_model( gtap::String; 
                     pulse::Bool=false,

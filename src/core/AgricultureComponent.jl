@@ -44,13 +44,13 @@ using Mimi
             v.agrish[t, r] = p.agrish0[r] * (ypc / ypc90)^(-p.agel)
 
             # Interpolate for p.temp, using the three gtap welfare points with the additional origin (0,0) point
-            loss = linear_interpolate([0, v.gtap_df[r, :]...], collect(0:3), p.temp[t])
-            loss = p.floor_on_damages ? max(-100, loss) : loss
-            loss = p.ceiling_on_benefits ? min(100, loss)  : loss
-            v.AgLossGTAP[t, r] = loss / 100
+            impact = linear_interpolate([0, v.gtap_df[r, :]...], collect(0:3), p.temp[t])
+            impact = p.floor_on_damages ? max(-100, impact) : impact
+            impact = p.ceiling_on_benefits ? min(100, impact)  : impact
+            v.AgLossGTAP[t, r] = - impact / 100 # We take the negative to go from impact to loss
 
             # Calculate total cost for the ag sector based on the percent loss
-            v.agcost[t, r] = p.income[t, r] * v.agrish[t, r] * v.AgLossGTAP[t, r]  # take out the -1 from original fund component here because damages are the other sign in Moore data
+            v.agcost[t, r] = p.income[t, r] * v.agrish[t, r] * v.AgLossGTAP[t, r]
         end
     end
 end
