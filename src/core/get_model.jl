@@ -57,7 +57,6 @@ function get_model( gtap::String;
 
     # Access which of the 5 possible DFs to use for the damage function
     gtap_idx = findfirst(isequal(gtap), gtaps)
-    gtap_idx === nothing || error("Unknown GTAP dataframe specification: \"$gtap\". Must be one of the following: $gtaps")
     gtap_df = gtap_df_all[:, :, gtap_idx]
 
     update_param!(m, :Agriculture, :gtap_df, gtap_df)
