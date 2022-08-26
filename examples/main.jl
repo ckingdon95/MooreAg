@@ -3,14 +3,14 @@
 # The variable `AgLossGTAP` (percent loss in the ag sector) is saved for each DF in `output/AgLossGTAP`. 
 
 using DelimitedFiles
-using MooreAg
+using MimiMooreEtAlAgricultureImpacts
 
 output_dir = joinpath(@__DIR__, "../output/AgLossGTAP/")
 mkpath(output_dir)
 
-for gtap in MooreAg.gtaps
+for gtap in MimiMooreEtAlAgricultureImpacts.gtaps
 
-    m = MooreAg.get_model(gtap)
+    m = MimiMooreEtAlAgricultureImpacts.get_model(gtap)
     run(m)
     AgLossGTAP = m[:Agriculture, :AgLossGTAP]   # this is the percent loss variable calculated across all FUND regions and time periods (currently 2005 to 2300)
     writedlm(joinpath(output_dir, "AgLossGTAP_$gtap.csv"), AgLossGTAP, ',')

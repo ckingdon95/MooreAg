@@ -1,7 +1,7 @@
 using Mimi
 
 """
-MooreAg.get_ag_scc(gtap::String; 
+MimiMooreEtAlAgricultureImpacts.get_ag_scc(gtap::String; 
     prtp::Float64 = 0.03, 
     horizon::Int = _default_horizon,
     floor_on_damages::Bool = true,

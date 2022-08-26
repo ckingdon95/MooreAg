@@ -1,9 +1,9 @@
 using DelimitedFiles
 using Mimi
-using MooreAg
+using MimiMooreEtAlAgricultureImpacts
 using Test
 
-@testset "MooreAg" begin
+@testset "MimiMooreEtAlAgricultureImpacts" begin
 
 include("test_api.jl")
 include("test_validation.jl")

@@ -1,6 +1,6 @@
 # Reference
 
 ```@docs
-MooreAg.get_model
-MooreAg.get_ag_scc
+MimiMooreEtAlAgricultureImpacts.get_model
+MimiMooreEtAlAgricultureImpacts.get_ag_scc
 ```

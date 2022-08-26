@@ -2,7 +2,7 @@ using DelimitedFiles
 using Mimi
 
 """
-    MooreAg.get_model(gtap::String; 
+    MimiMooreEtAlAgricultureImpacts.get_model(gtap::String; 
         pulse::Bool=false,
         floor_on_damages::Bool = true,
         ceiling_on_benefits::Bool = false)

@@ -1,23 +1,23 @@
-# MooreAg
+# MimiMooreEtAlAgricultureImpacts
 
-The `MooreAg` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
+The `MimiMooreEtAlAgricultureImpacts` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
 
 ## Installation
 
 If you are new to the Julia language or to the Mimi software package, please see the [Mimi documentation](https://www.mimiframework.org/Mimi.jl/stable/installation/) for installation of Julia and Mimi.
 
-`MooreAg` is a Julia package registered on the [MimiRegistry](https://github.com/mimiframework/MimiRegistry). To add the `MooreAg` package, you must already have the MimiRegistry added to your system. From a Julia package REPL, run the following. You only need to run the first line once on your system. In the second line, we recommend that you also add the Mimi package, so that you can use additional Mimi functionality.
+`MimiMooreEtAlAgricultureImpacts` is a Julia package registered on the [MimiRegistry](https://github.com/mimiframework/MimiRegistry). To add the `MimiMooreEtAlAgricultureImpacts` package, you must already have the MimiRegistry added to your system. From a Julia package REPL, run the following. You only need to run the first line once on your system. In the second line, we recommend that you also add the Mimi package, so that you can use additional Mimi functionality.
 ```
 pkg> registry add https://github.com/mimiframework/MimiRegistry.git
-pkg> add MooreAg, Mimi
+pkg> add MimiMooreEtAlAgricultureImpacts, Mimi
 ```
 
 ## Example use
 See docstrings for a full description of the available functionality.
 ```julia
-using MooreAg, Mimi
+using MimiMooreEtAlAgricultureImpacts, Mimi
 
-m = MooreAg.get_model("midDF")  # specify which of the 5 available GTAP dataframes of temperature-welfare results to use for the damage function
+m = MimiMooreEtAlAgricultureImpacts.get_model("midDF")  # specify which of the 5 available GTAP dataframes of temperature-welfare results to use for the damage function
 run(m)
 explore(m)
 
@@ -26,8 +26,8 @@ run(m)
 explore(m)
 
 # Compare the values of the agricultural SCC with and without limiting how big damages can be 
-ag_scc1 = MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=true)
-ag_scc2 = MooreAg.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=false)
+ag_scc1 = MimiMooreEtAlAgricultureImpacts.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=true)
+ag_scc2 = MimiMooreEtAlAgricultureImpacts.get_ag_scc("lowDF", prtp=0.03, floor_on_damages=false)
 ```
 
 ## Component description
@@ -52,9 +52,9 @@ Calculated variables:
 
 ## Docstrings of available functions
 
-**MooreAg.get_model**
+**MimiMooreEtAlAgricultureImpacts.get_model**
 ```
-MooreAg.get_model(gtap::String; 
+MimiMooreEtAlAgricultureImpacts.get_model(gtap::String; 
     pulse::Bool=false,
     floor_on_damages::Bool = true,
     ceiling_on_benefits::Bool = false)
@@ -74,9 +74,9 @@ agricultural sector in each region.
 If `ceiling_on_benefits` = true, then the agricultural benefits in each timestep will not be allowed to exceed 100% of the size of the 
 agricultural sector in each region.
 
-**MooreAg.get_ag_scc**
+**MimiMooreEtAlAgricultureImpacts.get_ag_scc**
 ```
-MooreAg.get_ag_scc(gtap::String; 
+MimiMooreEtAlAgricultureImpacts.get_ag_scc(gtap::String; 
     prtp::Float64 = 0.03, 
     horizon::Int = _default_horizon,
     floor_on_damages::Bool = true,

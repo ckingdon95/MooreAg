@@ -1,6 +1,6 @@
 # Welcome
 
-The `MooreAg` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
+The `MimiMooreEtAlAgricultureImpacts` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
 
 ## The Agriculture Component
 
@@ -12,16 +12,16 @@ There are 5 choices of temperature-welfare dataframes that can be used to form t
 - "AgMIP_AllDF" - results from all AgMIP studies
 - "AgMIP_NoNDF - results from AgMIP studies that explicitly model nitrogen stress
 
-The `gtap_spec` parameter in the `MooreAg.Agriculture` must be set to one of those five choices (as a string), which determines which damage function the component uses.
+The `gtap_spec` parameter in the `MimiMooreEtAlAgricultureImpacts.Agriculture` must be set to one of those five choices (as a string), which determines which damage function the component uses.
 
 
-## The MooreAg package
+## The MimiMooreEtAlAgricultureImpacts package
 
-The `MooreAg` package provides the following user-facing functions:
+The `MimiMooreEtAlAgricultureImpacts` package provides the following user-facing functions:
 
-- `MooreAg.get_model(gtap; pulse=false)` returns a Mimi model with one component, the `MooreAgComponent` named :Agriculture in the model. The caller must specify which `gtap` dataframe they want to use for the damage function (must be one of five names associated with the five temperature/welfare dataframes from Fran Moore). The returned model has input parameters set to usg2 socioeconomics and a temperature pathway from DICE. If `pulse` is set to `true`, then the temperature parameter is set to a temperature path from DICE with an additional Gt of CO2 emissions in 2020. 
-- `MooreAg.get_ag_scc(gtap; prtp=0.03)` calculates the Agricultural SCC for the specified `gtap` and pure rate of time preference discount rate `prtp`. It uses the DICE temperature pathway for the base run, and a pulsed temperature pathway from DICE with additional emissions in 2020 for the marginal run. So this function currently only calculates the SCC for 2020 because of the available pre-saved DICE pulsed temperature path.
-- Not a function, but users can also access `MooreAg.Agriculture` which is the Mimi component id of the Mimi component defined in "src/MooreAgComponent.jl"
+- `MimiMooreEtAlAgricultureImpacts.get_model(gtap; pulse=false)` returns a Mimi model with one component, the `MimiMooreEtAlAgricultureImpactsComponent` named :Agriculture in the model. The caller must specify which `gtap` dataframe they want to use for the damage function (must be one of five names associated with the five temperature/welfare dataframes from Fran Moore). The returned model has input parameters set to usg2 socioeconomics and a temperature pathway from DICE. If `pulse` is set to `true`, then the temperature parameter is set to a temperature path from DICE with an additional Gt of CO2 emissions in 2020. 
+- `MimiMooreEtAlAgricultureImpacts.get_ag_scc(gtap; prtp=0.03)` calculates the Agricultural SCC for the specified `gtap` and pure rate of time preference discount rate `prtp`. It uses the DICE temperature pathway for the base run, and a pulsed temperature pathway from DICE with additional emissions in 2020 for the marginal run. So this function currently only calculates the SCC for 2020 because of the available pre-saved DICE pulsed temperature path.
+- Not a function, but users can also access `MimiMooreEtAlAgricultureImpacts.Agriculture` which is the Mimi component id of the Mimi component defined in "src/MimiMooreEtAlAgricultureImpactsComponent.jl"
 
 ## Examples
 

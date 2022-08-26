@@ -1,5 +1,5 @@
 makedocs(
-    modules = [MooreAg],
+    modules = [MimiMooreEtAlAgricultureImpacts],
     sitename = "Moore Agriculture Documentation",
     pages = [
         "Home" => "index.md",
@@ -9,5 +9,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "https://github.com/ckingdon95/MooreAg.jl.git",
+    repo = "https://github.com/ckingdon95/MimiMooreEtAlAgricultureImpacts.jl.git",
 )

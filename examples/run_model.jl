@@ -1,6 +1,6 @@
 using Mimi
-using MooreAg
+using MimiMooreEtAlAgricultureImpacts
 
-m = MooreAg.get_model("midDF")
+m = MimiMooreEtAlAgricultureImpacts.get_model("midDF")
 run(m)
 explore(m)

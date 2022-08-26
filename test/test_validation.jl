@@ -5,10 +5,10 @@
 results = readdlm(joinpath(@__DIR__, "../data/validation/ag_scc.csv"), ',')
 mimi_sccs = Vector{Any}()
 global i = 2
-for gtap in MooreAg.gtaps 
+for gtap in MimiMooreEtAlAgricultureImpacts.gtaps 
     for dr in [0.025, 0.03, 0.05]
         println(gtap, dr)
-        mimi_scc = MooreAg.get_ag_scc(gtap, prtp = dr)
+        mimi_scc = MimiMooreEtAlAgricultureImpacts.get_ag_scc(gtap, prtp = dr)
         r_scc = results[i, 3]
         @test mimi_scc == r_scc
         push!(mimi_sccs, mimi_scc)
