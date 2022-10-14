@@ -20,7 +20,7 @@ Mimi = "1"
 DataFrames = "0.19.1, 0.20, 0.21, 0.22, 1.0"
 CSVFiles = "0.16, 1.0"
 Distributions = "0.23, 0.24, 0.25"
-Interpolations = "0.13"
+Interpolations = "0.13, 0.14"
 
 [targets]
 test = ["Test", "TestItemRunner"]
