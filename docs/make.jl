@@ -1,6 +1,8 @@
+using Documenter, MimiMooreEtAlAgricultureImpacts
+
 makedocs(
     modules = [MimiMooreEtAlAgricultureImpacts],
-    sitename = "Moore Agriculture Documentation",
+    sitename = "Moore et al. Agriculture Documentation",
     pages = [
         "Home" => "index.md",
         "Reference" => "reference.md"
@@ -9,5 +11,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "https://github.com/ckingdon95/MimiMooreEtAlAgricultureImpacts.jl.git",
+    repo = "https://github.com/rffscghg/MimiMooreEtAlAgricultureImpacts.jl.git",
 )
