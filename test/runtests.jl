@@ -1,11 +1,3 @@
-using DelimitedFiles
-using Mimi
-using MimiMooreEtAlAgricultureImpacts
-using Test
+using TestItemRunner
 
-@testset "MimiMooreEtAlAgricultureImpacts" begin
-
-include("test_api.jl")
-include("test_validation.jl")
-
-end
+@run_package_tests
