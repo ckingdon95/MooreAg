@@ -6,10 +6,13 @@ The `MimiMooreEtAlAgricultureImpacts` package defines an `Agriculture` component
 
 If you are new to the Julia language or to the Mimi software package, please see the [Mimi documentation](https://www.mimiframework.org/Mimi.jl/stable/installation/) for installation of Julia and Mimi.
 
-`MimiMooreEtAlAgricultureImpacts` is a Julia package registered on the [MimiRegistry](https://github.com/mimiframework/MimiRegistry). To add the `MimiMooreEtAlAgricultureImpacts` package, you must already have the MimiRegistry added to your system. From a Julia package REPL, run the following. You only need to run the first line once on your system. In the second line, we recommend that you also add the Mimi package, so that you can use additional Mimi functionality.
+`MimiMooreEtAlAgricultureImpacts` is a Julia package registered in the general Julia package registry. From a Julia package REPL, run the following to add the package to your environment:
 ```
-pkg> registry add https://github.com/mimiframework/MimiRegistry.git
 pkg> add MimiMooreEtAlAgricultureImpacts, Mimi
+```
+We recommend you also add the `Mimi` package itself to your environment with:
+```
+pkg> add Mimi
 ```
 
 ## Example use
