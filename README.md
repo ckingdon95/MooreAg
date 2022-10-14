@@ -1,3 +1,7 @@
+[![Run CI on main](https://github.com/rffscghg/MimiMooreEtAlAgricultureImpacts.jl/actions/workflows/jlpkgbutler-ci-master-workflow.yml/badge.svg?branch=main)](https://github.com/rffscghg/MimiMooreEtAlAgricultureImpacts.jl/actions/workflows/jlpkgbutler-ci-master-workflow.yml)
+[![codecov](https://codecov.io/gh/rffscghg/MimiMooreEtAlAgricultureImpacts.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/rffscghg/MimiMooreEtAlAgricultureImpacts.jl)
+[![Stable documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://rffscghg.github.io/MimiMooreEtAlAgricultureImpacts.jl/stable/)
+
 # MimiMooreEtAlAgricultureImpacts
 
 The `MimiMooreEtAlAgricultureImpacts` package defines an `Agriculture` component to be used in Integrated Assessment Models within the [Mimi Framework](https://github.com/mimiframework/Mimi.jl). In addition to the component definition, this package also provides helper functions for using and running the component. Code is based on the agricultural damage functions from a [2017 paper in Nature Communications](https://www.nature.com/articles/s41467-017-01792-x) by Moore et al.
