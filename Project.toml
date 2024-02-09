@@ -15,7 +15,7 @@ CSVFiles = "0.16, 1.0"
 DataFrames = "0.19.1, 0.20, 0.21, 0.22, 1.0"
 DelimitedFiles = "1"
 Distributions = "0.23, 0.24, 0.25"
-Interpolations = "0.13, 0.14"
+Interpolations = "0.13, 0.14, 0.15"
 Mimi = "1"
 julia = "1.6"
 
