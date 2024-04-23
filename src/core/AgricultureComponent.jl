@@ -24,6 +24,7 @@ using Mimi
     AgLossGTAP = Variable(index=[time,fund_regions]) # Moore's fractional loss (intermediate variable for calculating agcost)
 
     gtap_df = Parameter(index=[fund_regions, 3])  # three temperature data points per region
+    gtap_name = Parameter{String}() # the name of the gtap damage function
 
     floor_on_damages = Parameter{Bool}(default = true)
     ceiling_on_benefits = Parameter{Bool}(default = false)
