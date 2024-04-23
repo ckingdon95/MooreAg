@@ -60,6 +60,7 @@ function get_model( gtap::String;
     gtap_df = gtap_df_all[:, :, gtap_idx]
 
     update_param!(m, :Agriculture, :gtap_df, gtap_df)
+    update_param!(m, :Agriculture, :gtap_name, gtap)
     update_param!(m, :Agriculture, :floor_on_damages, floor_on_damages)
     update_param!(m, :Agriculture, :ceiling_on_benefits, ceiling_on_benefits)
 
